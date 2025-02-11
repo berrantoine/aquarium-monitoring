@@ -10,7 +10,7 @@
 
     <script>
         async function fetchData() {
-            let response = await fetch("https://script.google.com/macros/s/AKfycbw-0vRMl8-G5MDEVBeVkIN7RhjkrGEpJYLz5vq2I_01jr4OYVHqcHNTdiB1W7621arGFg/exec?recuperer_donnees=1");
+            let response = await fetch("https://script.google.com/macros/s/AKfycbw9kCZgGyS9hPP4mcnGS_-HI3v5I3fHq6Fb0wsTzjbYyse0bc8OuyanHafjSiOiCaBzXQ/exec?recuperer_donnees=1");
             let data = await response.json();
 
             let labels = data.map(item => item.date);
