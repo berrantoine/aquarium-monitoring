@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi Aquarium</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <h1>Suivi de l'Aquarium</h1>
+
+        <div v-for="parametre in parametres" :key="parametre">
+            <label>{{ parametre }} :</label>
+            <input type="number" v-model="valeurs[parametre]" name="valeur">
+        </div>
+
+        <button @click="envoyerValeurs">Enregistrer</button>
+        <p v-if="message">{{ message }}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                parametres: ["Salinité", "pH", "NO3", "PO4"],
+                valeurs: {},
+                message: ""
+            },
+            methods: {
+                async envoyerValeurs() {
+                    for (let param in this.valeurs) {
+                        await fetch("https://script.google.com/macros/s/AKfycbw-0vRMl8-G5MDEVBeVkIN7RhjkrGEpJYLz5vq2I_01jr4OYVHqcHNTdiB1W7621arGFg/exec", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ parametre: param, valeur: this.valeurs[param], key: "12345678" })
+                        });
+                    }
+                    this.message = "Données enregistrées !";
+                    setTimeout(() => this.message = "", 3000);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

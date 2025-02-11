@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graphique Aquarium</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <canvas id="graphique"></canvas>
+
+    <script>
+        async function fetchData() {
+            let response = await fetch("https://script.google.com/macros/s/AKfycbw-0vRMl8-G5MDEVBeVkIN7RhjkrGEpJYLz5vq2I_01jr4OYVHqcHNTdiB1W7621arGFg/exec?recuperer_donnees=1");
+            let data = await response.json();
+
+            let labels = data.map(item => item.date);
+            let values = data.map(item => item.valeur);
+
+            new Chart(document.getElementById("graphique"), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Évolution des paramètres",
+                        data: values,
+                        borderColor: "blue",
+                        fill: false
+                    }]
+                }
+            });
+        }
+        fetchData();
+    </script>
+
+</body>
+</html>
